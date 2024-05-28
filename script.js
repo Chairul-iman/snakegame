@@ -14,44 +14,10 @@ document.addEventListener('DOMContentLoaded', function() {
   let touchStartX = 0;
   let touchStartY = 0;
 
-canvas.addEventListener('touchstart', handleTouchStart);
-canvas.addEventListener('touchmove', handleTouchMove);
-
-function handleTouchStart(event) {
-    touchStartX = event.touches[0].clientX;
-    touchStartY = event.touches[0].clientY;
-}
-
-function handleTouchMove(event) {
-    if (!touchStartX || !touchStartY) {
-        return;
-    }
-
-    const touchEndX = event.touches[0].clientX;
-    const touchEndY = event.touches[0].clientY;
-
-    const dx = touchEndX - touchStartX;
-    const dy = touchEndY - touchStartY;
-
-    if (Math.abs(dx) > Math.abs(dy)) {
-        if (dx > 0) {
-            snake.changeDirection('Right');
-        } else {
-            snake.changeDirection('Left');
-        }
-    } else {
-        if (dy > 0) {
-            snake.changeDirection('Down');
-        } else {
-            snake.changeDirection('Up');
-        }
-    }
-
-    touchStartX = 0;
-    touchStartY = 0;
-}
-
   startButton.addEventListener('click', startGame);
+
+  canvas.addEventListener('touchstart', handleTouchStart);
+  canvas.addEventListener('touchmove', handleTouchMove);
 
   function startGame() {
       snake = new Snake();
@@ -197,6 +163,40 @@ function handleTouchMove(event) {
           ctx.fillStyle = '#f00';
           ctx.fillRect(this.x, this.y, scale, scale);
       }
+  }
+
+  function handleTouchStart(event) {
+      touchStartX = event.touches[0].clientX;
+      touchStartY = event.touches[0].clientY;
+  }
+
+  function handleTouchMove(event) {
+      if (!touchStartX || !touchStartY) {
+          return;
+      }
+
+      const touchEndX = event.touches[0].clientX;
+      const touchEndY = event.touches[0].clientY;
+
+      const dx = touchEndX - touchStartX;
+      const dy = touchEndY - touchStartY;
+
+      if (Math.abs(dx) > Math.abs(dy)) {
+          if (dx > 0) {
+              snake.changeDirection('Right');
+          } else {
+              snake.changeDirection('Left');
+          }
+      } else {
+          if (dy > 0) {
+              snake.changeDirection('Down');
+          } else {
+              snake.changeDirection('Up');
+          }
+      }
+
+      touchStartX = 0;
+      touchStartY = 0;
   }
 
   document.addEventListener('keydown', handleKeyDown); 
